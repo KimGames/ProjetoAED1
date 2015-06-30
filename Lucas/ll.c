@@ -79,6 +79,37 @@ No* buscaLista(No*L,float coef, int exp){
   return p;
 }
 
+No* buscaListaCoef(No *L, int coef) {
+  No* p=L;
+
+  while(p!=NULL && p->coef!=coef) {
+    p=p->prox;
+  }
+  return p;
+}
+
+No* buscaListaExp(No *L, int exp) {
+  No* p=L;
+
+  while(p!=NULL && p->exp!=exp) {
+    p=p->prox;
+  }
+  return p;
+}
+
+int contaOcorrenciasGrau(No *P1, int exp) {
+  No *aux = P1;
+  int ocorrencias = 0;
+
+  while (aux != NULL) {
+    if(aux->exp == exp) {
+      ocorrencias++;
+    }
+    aux = aux->prox;
+  }
+  return ocorrencias;
+}
+
 void destroiLista(No*L){
   No* t,*p=L;
 
@@ -92,7 +123,8 @@ void destroiLista(No*L){
 No* insereSomando(No*L,float coef,int exp){
   No*ant=NULL,*post=L,*novo;
 
-  while((post!=NULL)&&((post->exp > exp)&&(post->exp!=exp))){//acha a posição de inserção
+  //acha a posição de inserção
+  while((post!=NULL)&&((post->exp > exp)&&(post->exp!=exp))) {
     ant = post;
     post=post->prox;
   }
@@ -171,3 +203,22 @@ float calculaValor(No *P1, float x) {
   return valor;
 }
 
+void simplificaPolinomio(No *P1) {
+  No *aux = P1;
+  No *R = criaLista();
+
+  while (aux != NULL) {
+    if(aux->coef == 0) {
+      aux = removeLista(aux, aux->exp, aux->coef);
+    }
+    else if(contaOcorrenciasGrau(aux, aux->exp) > 1) {
+      //incompleto.....
+      R = buscaListaExp(aux, aux->exp);
+      aux->coef *= R->coef;
+      R = removeLista(aux, aux->coef, aux->exp);
+    }
+    else {
+      aux = aux->prox;
+    }
+  }
+}
