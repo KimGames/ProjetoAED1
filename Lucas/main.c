@@ -2,7 +2,7 @@
 
 int main() {
   char op[1];
-  char **log;
+  //char **log;
 
   do{
     printf("Escolha uma operação ou digite H para ajuda\n");
@@ -28,7 +28,7 @@ int main() {
       printf("\n");
       break;
     case 'g':
-      simplificaPolinomio();
+      //simplificaPolinomio();
       printf("Polinômio simplificado!\n");
       break;
     case 'h':
