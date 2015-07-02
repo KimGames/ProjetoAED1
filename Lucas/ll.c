@@ -13,6 +13,7 @@ void imprimeLista(No*L){
   }
   printf("\n");
 }
+
 No* insereInicio(No*L,float coef,int exp){
   No* p=L,*novo;
   novo = (No*)malloc(sizeof(No));
@@ -159,65 +160,29 @@ void simplificaPolinomio(No *P1) {
   }
 }
 
-
-/* No* insereSomando(No*L,float coef,int exp){ */
-/*   No*ant=NULL,*post=L,*novo; */
-
-/*   //acha a posição de inserção */
-/*   while((post!=NULL)&&((post->exp > exp)&&(post->exp!=exp))) { */
-/*     ant = post; */
-/*     post=post->prox; */
-/*   } */
-/*   if((L!=NULL)&&(post!=NULL)){//se as listas nao chegaram ao fim */
-/*     if (post->exp == exp){//ja existe o grau a ser inserido */
-/*       post->coef = post->coef+coef; */
-/*       return L; */
-/*     } */
-/*   } */
-
-/*   //nao existe o grau a ser inserido */
-/*   novo = (No*)malloc(sizeof(No)); */
-/*   novo->coef=coef; */
-/*   novo->exp=exp; */
-/*   if (novo==NULL){ */
-/*     printf("Erro de alocacao"); */
-/*     exit(1); */
-/*   } */
-/*   if (ant==NULL){ */
-/*     novo->prox = post; */
-/*     L=novo; */
-/*   }else{ */
-/*     ant->prox=novo; */
-/*     novo->prox=post; */
-/*   } */
-
-/*   return L; */
-/* } */
-
-/* No* somaPolinomio(No*P1,No*P2,No*P3){ */
-/*   No* aux1=P1,*aux2=P2; */
-
-/*   while((aux1!=NULL)||(aux2!=NULL)){ */
-/*     if(aux1!=NULL){ */
-/*       P3=insereSomando(P3,aux1->coef,aux1->exp); */
-/*       aux1=aux1->prox; */
-/*     } */
-/*     if(aux2!=NULL){ */
-/*       P3=insereSomando(P3,aux2->coef,aux2->exp); */
-/*       aux2=aux2->prox; */
-/*     } */
-/*   } */
-/*   return P3; */
-/* } */
-
-float calculaValor(No *P1, float x) {
-  No *aux = P1;
+float calculaValor(No *P, float x) {
+  No *aux = P;
   float valor = 0;
 
+  //calcula o valor de cada o elemento do polinômio e o acumula na variável valor
   while (aux!=NULL) {
     valor = valor + (pow(x, aux->exp) * aux->coef);
   }
   return valor;
+}
+
+float calculaValorComposto(No **P, float v) {
+  No *aux = *L;
+
+  //funcao nao testada
+  //percorre a lista de polinômios e calcula o valor de todos os
+  //seus elementos para cada chamada de calculaValor, v terá um novo valor
+  //que dependerá do resultado do último polinômio calculado
+  while(aux != NULL) {
+    v = calculaValor(aux, v);
+    aux = aux->prox;
+  }
+  return v;
 }
 
 No* somaPolinomio(No *P1, No *P2) {
@@ -235,8 +200,8 @@ No* subtraiPolinomio(No *P1, No *P2) {
   No* P2negativa = criaLista();
   No* P3 = criaLista();
 
-  while(aux != NULL) {//loop que nega o polinômio P2
-    P2negativa = insereOrdenado(P2negativa, aux->coef, aux->exp);
+  while(aux != NULL) {//loop que multiplica o polinômio P2 por -1
+    P2negativa = insereOrdenado(P2negativa, (aux->coef * (-1)), aux->exp);
     aux = aux->prox;
   }
   //analálogo ao soma polinômio

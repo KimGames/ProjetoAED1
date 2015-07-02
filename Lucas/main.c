@@ -2,6 +2,8 @@
 
 int main() {
   char op[1];
+  char op2[1];
+  float x;
   //char **log;
 
   do{
@@ -35,6 +37,18 @@ int main() {
       printf("\n");
       break;
     case 'i':
+      do {
+        printf("1-Inserir novo polinômio\n2-Inserir valor de x\n");
+        scanf("%s", op2);
+        if(op2[0] == '1') {
+          //aloca polinomios em uma lista de listas
+        }
+        else {
+          printf("Valor de x: ");
+          scanf("%f", &x);
+          //calcula valor composto
+        }
+      }while(op2[0] != 0);
       printf("\n");
       break;
     case 'j':

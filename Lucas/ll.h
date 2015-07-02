@@ -27,6 +27,5 @@ No* subtraiPolinomio(No *P1, No *P2);
 No* dividePolinomio(No *P1, No *P2);
 No* derivaPolinomio(No *L1);
 No* integraPolinomio(No *L1);
-float calculaValor(No *P1, float x);
-
-
+float calculaValor(No *P, float x);
+float calculaValorComposto(No **P, float v);
